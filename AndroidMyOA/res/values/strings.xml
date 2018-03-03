@@ -4,5 +4,21 @@
 
     <string name="app_name">xxx集团OA系统</string>
     <string name="hello_world">Hello world!</string>
+    
+    <!-- 全局字符 -->
+    <string name="global_ti_shi">提示</string>
+    <string name="global_que_ding">确定</string>
+    <string name="global_qu_xiao">取消</string>
+    
+    <!-- 登录模块字符 -->
+    <string name="login_deng_lu">登录</string>
+    <string name="login_gong_hao">工号：</string>
+    <string name="login_input_gong_hao">请输入工号</string>
+    <string name="login_mi_ma">密码：</string>
+    <string name="login_input_mi_ma">请输入密码</string>
+    <string name="login_warn_gong_hao">请检查工号是否填写</string>
+    <string name="login_warn_mi_ma">请检查密码是否填写</string>
+    <string name="login_unknown_gong_hao">工号不存在，请检查填写内容</string>
+    <string name="login_wrong_mi_ma">密码错误，请检查填写内容</string>
 
 </resources>
