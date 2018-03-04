@@ -24,7 +24,7 @@ class SUsers():
     # 插入单个user
 
 
-    #获取全部的工号
+    # 获取全部的工号
     @trans_params
     def get_all_unum(self):
         num_list = None
@@ -36,7 +36,7 @@ class SUsers():
             self.session.close()
         return num_list
 
-    #根据工号获取密码
+    # 根据工号获取密码
     def get_upwd_by_unum(self, unum):
         upwd = None
         try:
@@ -48,7 +48,7 @@ class SUsers():
             self.session.close()
         return upwd
 
-    #根据工号获取uid
+    # 根据工号获取uid
     def get_uid_by_unum(self, unum):
         uid = None
         try:
@@ -58,3 +58,39 @@ class SUsers():
         finally:
             self.session.close()
         return uid
+
+    # 获取全部uid
+    @trans_params
+    def get_all_uid(self):
+        uid_list = None
+        try:
+            uid_list = self.session.query(model.User.Uid).all()
+        except Exception as e:
+            print e.message
+            return False
+        finally:
+            self.session.close()
+        return uid_list
+
+    # 根据uid获取密码
+    def get_upwd_by_uid(self, uid):
+        upwd = None
+        try:
+            upwd = self.session.query(model.User.Upwd).filter_by(Uid = uid).scalar()
+        except Exception as e:
+            print e.message
+        finally:
+            self.session.close()
+        return upwd
+
+    # 根据uid更新密码
+    def update_upwd_by_uid(self, uid, form):
+        try:
+            self.session.query(model.User).filter_by(Uid=uid).update(form)
+            return True
+        except Exception as e:
+            print e.message
+            return False
+        finally:
+            self.session.close()
+
