@@ -13,8 +13,6 @@ api = flask_restful.Api(app)
 api.add_resource(AUsers, "/users/<string:users>")
 
 
-
-
 # 启动方法
 if __name__ == '__main__':
     app.run('0.0.0.0', 7443, debug=True)

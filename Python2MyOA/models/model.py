@@ -20,7 +20,7 @@ Base = declarative_base()
 
 
 # 用户表
-class Uers(Base):
+class User(Base):
     __tablename__ = "Users"
     Uid = Column(String(64), primary_key=True)
     Uname = Column(String(32), nullable=False)
@@ -30,3 +30,17 @@ class Uers(Base):
     Udep = Column(String(128), nullable=False)
     Utel = Column(String(16), nullable=False)
     UCid = Column(String(64), nullable=False)
+
+"""
+    create table Users(
+      Uid VARCHAR (64) PRIMARY KEY NOT NULL ,
+      Uname VARCHAR (32) NOT NULL ,
+      Upwd VARCHAR (32) NOT NULL ,
+      Utype INT (2) NOT NULL,
+      Ucid VARCHAR (64) NOT NULL ,
+      Unum VARCHAR (64) NOT NULL ,
+      Udep VARCHAR (128) NOT NULL ,
+      Utel VARCHAR (16) NOT NULL ,
+      Usalary INT (9) NOT NULL
+      );
+"""

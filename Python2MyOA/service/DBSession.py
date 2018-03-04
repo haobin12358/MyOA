@@ -11,7 +11,7 @@ from models import model
 
 # 实例化session
 db_session = sessionmaker(bind=model.mysql_engine)
-db_log_session = sessionmaker(bind=log_model.mysql_engine)
+#db_log_session = sessionmaker(bind=log_model.mysql_engine)
 
 
 # 获取数据库连接session

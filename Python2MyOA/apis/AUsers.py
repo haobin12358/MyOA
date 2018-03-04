@@ -13,14 +13,15 @@ class AUsers(Resource):
     def __init__(self):
         self.cuser = CUser()
 
-    def post(self, action):
+    def post(self, users):
         # 所有user的post接口 通过eval实例化的controller来执行
 
         apis = {
             "login": "self.cuser.login()",
-            "changepwd": "self.cuser.changepwd()"
+            "changepwd": "self.cuser.changepwd()",
+            "userinfo": "self.cuser.userinfo()"
         }
-        if action not in apis:
+        if users not in apis:
             from config.message import NO_APIS as message
             from config.status import OUT as status
             from config.statuscode import NO_APIS as statuscode
@@ -28,10 +29,10 @@ class AUsers(Resource):
             return {
                 "message": message,
                 "status": status,
-                "statuscode": statuscode
+                "statuscode": statuscode,
             }
 
-        return eval(apis.get(action))
+        return eval(apis.get(users))
 
     def get(self):
         # get 接口
