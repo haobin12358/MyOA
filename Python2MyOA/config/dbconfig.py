@@ -2,7 +2,7 @@
 
 
 #数据库名
-database="zhangwenwendb"
+database="myoadb"
 #数据库所在主机ip
 host="localhost"
 #数据库端口
