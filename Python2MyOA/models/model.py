@@ -21,7 +21,7 @@ Base = declarative_base()
 
 
 # 用户表
-class Uers(Base):
+class User(Base):
     __tablename__ = "Users"
     Uid = Column(String(64), primary_key=True)
     Uname = Column(String(32), nullable=False)
