@@ -58,3 +58,13 @@ class SUsers():
         finally:
             self.session.close()
         return uid
+
+    # 插入一个user 初始化数据时用到
+    def add_user(self, user):
+        try:
+            self.session.add(user)
+            self.session.commit()
+        except Exception, e:
+            print(e)
+        finally:
+            self.session.close()
