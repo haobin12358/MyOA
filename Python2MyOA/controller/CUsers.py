@@ -9,6 +9,7 @@ from flask import request
 import json
 #引用项目类
 from service.SUsers import SUsers
+from common.get_str import get_str
 
 class CUser():
     def __init__(self):
@@ -34,7 +35,6 @@ class CUser():
             }
         form = json.loads(form)
         num_list =self.susers.get_all_unum() #获取数据库中存在的uname
-
         # 判断Unum是否存在
         if str(form["Unum"]) not in num_list:
             from config.message import NO_USER as message
@@ -83,13 +83,27 @@ class CUser():
             "statuscode": statuscode,
         }
 
-    def changepwd(self):
+    def pwdchange(self):
         """
         该方法用于修改密码
         :return:
         """
         form = request.data  # 获取前端发送的body体
+        args = request.args.to_dict() # 获取前端的params参数
         print str(form)
+        print(args)
+        # 判断Uid参数不为空
+        if str(args) == "" or str(args) == "[]":
+            from config.message import UID_MISS as message
+            from config.status import INNER as status
+            from config.statuscode import NO_UID as statuscode
+
+            return {
+                "message": message,
+                "status": status,
+                "statuscode": statuscode,
+            }
+
         # 判断body体不为空
         if str(form) == "" or str(form) == "[]":
             from config.message import PARAM_MISS as message
@@ -102,7 +116,90 @@ class CUser():
                 "statuscode": statuscode,
             }
 
+        uid_list = self.susers.get_all_uid()  # 获取数据库中存在的uid
+        print(uid_list)
+        # 判断session是否异常
+        if uid_list == False:
+            from config.message import SYSTEM_ERROR as message
+            from config.status import OUT as status
+            from config.statuscode import SYSTEM_ERROR as statuscode
 
+            return {
+                "message": message,
+                "status": status,
+                "statuscode": statuscode,
+            }
+
+        uid_to_str = get_str(args, "Uid")
+        # 判断uid存在
+
+        if uid_to_str not in uid_list:
+            from config.message import NO_UID as message
+            from config.status import INNER as status
+            from config.statuscode import NO_UID as statuscode
+
+            return {
+                "message": message,
+                "status": status,
+                "statuscode": statuscode,
+            }
+
+        form = json.loads(form)
+        upwd = self.susers.get_upwd_by_uid(uid_to_str) # 根据用户名获取数据库的id
+        # 判断session是否异常
+        if upwd == False:
+            from config.message import SYSTEM_ERROR as message
+            from config.status import OUT as status
+            from config.statuscode import SYSTEM_ERROR as statuscode
+
+            return {
+                "message": message,
+                "status": status,
+                "statuscode": statuscode,
+            }
+        # 判断原始密码输入正确
+        if form["oldpwd"] != upwd:
+            from config.message import WD_ERROR_OLD as message
+            from config.status import INNER as status
+            from config.statuscode import PWD_ERROR_OLD as statuscode
+
+            return {
+                "message": message,
+                "status": status,
+                "statuscode": statuscode,
+            }
+
+        # 判断新输入密码与原密码不相同
+        if form["oldpwd"] == form["newpwd"]:
+            from config.message import PWD_EQUAL_OLD as message
+            from config.status import INNER as status
+            from config.statuscode import PWD_EQUAL_OLD as statuscode
+
+            return {
+                "message": message,
+                "status": status,
+                "statuscode": statuscode,
+            }
+
+
+        # 根据uid修改用户密码
+        isupdate = self.susers.update_upwd_by_uid(uid_to_str, {"Upwd": form["newpwd"]})
+        # 判断session是否异常
+        if isupdate == False:
+            from config.message import SYSTEM_ERROR as message
+            from config.status import OUT as status
+            from config.statuscode import SYSTEM_ERROR as statuscode
+
+            return {
+                "message": message,
+                "status": status,
+                "statuscode": statuscode,
+            }
+        from config.status import OK as status
+        return {
+            "message": "pwdchange ok !",
+            "status": status,
+        }
     def userinfo(self):
         """
         该方法查看用户的所有信息

@@ -18,7 +18,7 @@ class AUsers(Resource):
 
         apis = {
             "login": "self.cuser.login()",
-            "changepwd": "self.cuser.changepwd()",
+            "pwdchange": "self.cuser.pwdchange()",
             "userinfo": "self.cuser.userinfo()"
         }
         if users not in apis:
