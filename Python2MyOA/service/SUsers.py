@@ -14,12 +14,11 @@ from common.TransformToList import trans_params
 # 操作user表的相关方法
 class SUsers():
     def __init__(self):
-        try:
-            self.session = DBSession.db_session() #实例化
-            self.status = True #session异常的判断标记
-        except Exception as e:
-            print e.message
-            self.status = False
+        """
+        self.session 数据库连接会话
+        self.status 判断数据库是否连接无异常
+        """
+        self.session, self.status = DBSession.get_session()
 
     # 插入单个user
 
