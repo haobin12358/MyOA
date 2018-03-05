@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- 颜色集，"场景_拼音全写名称,中间用下划线分隔" -->
+    <color name="mainactivity_view_blue">#C8E8FF</color>
 </resources>
