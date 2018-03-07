@@ -4,6 +4,7 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.getcwd())) # 增加系统路径
 import uuid
+from service.SUsers import SUsers
 
 
 class MakeData():

@@ -30,7 +30,7 @@ class User(Base):
     Unum = Column(String(64), nullable=False)
     Udep = Column(String(128), nullable=False)
     Utel = Column(String(16), nullable=False)
-    UCid = Column(String(64), nullable=False)
+    Ucid = Column(String(64), nullable=False)
 
 if __name__ == "__main__":
     '''

@@ -19,7 +19,6 @@ class AUsers(Resource):
         apis = {
             "login": "self.cuser.login()",
             "pwdchange": "self.cuser.pwdchange()",
-            "userinfo": "self.cuser.userinfo()"
         }
         if users not in apis:
             from config.message import NO_APIS as message
@@ -34,7 +33,7 @@ class AUsers(Resource):
 
         return eval(apis.get(users))
 
-    def get(self):
+    def get(self,users):
         # get 接口
         return self.cuser.userinfo()
 

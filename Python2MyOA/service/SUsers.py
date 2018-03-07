@@ -76,9 +76,10 @@ class SUsers():
     def get_upwd_by_uid(self, uid):
         upwd = None
         try:
-            upwd = self.session.query(model.User.Upwd).filter_by(Uid = uid).scalar()
+            upwd = self.session.query(model.User.Upwd).filter_by(Uid=uid).scalar()
         except Exception as e:
             print e.message
+            return False
         finally:
             self.session.close()
         return upwd
@@ -87,10 +88,23 @@ class SUsers():
     def update_upwd_by_uid(self, uid, form):
         try:
             self.session.query(model.User).filter_by(Uid=uid).update(form)
+            self.session.commit()
             return True
         except Exception as e:
             print e.message
+            self.session.rollback()
             return False
         finally:
             self.session.close()
 
+    # 用户uid获取用户个人信息
+    def get_user_info_by_uid(self, uid):
+        user_abo = None
+        try:
+            user_abo = self.session.query(model.User.Uname, model.User.Utype, model.User.Ucid,
+                                      model.User.Unum, model.User.Udep, model.User.Utel).filter_by(Uid=uid).first()
+        except Exception as e:
+            print e.message
+        finally:
+            self.session.close()
+        return user_abo
