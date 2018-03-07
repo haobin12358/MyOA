@@ -101,7 +101,6 @@ class SUsers():
             return False
         finally:
             self.session.close()
-<<<<<<< HEAD
 
     # 用户uid获取用户个人信息
     def get_user_info_by_uid(self, uid):
@@ -114,5 +113,3 @@ class SUsers():
         finally:
             self.session.close()
         return user_abo
-=======
->>>>>>> py
