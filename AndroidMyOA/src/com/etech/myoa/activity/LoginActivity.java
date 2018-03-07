@@ -72,6 +72,11 @@ public class LoginActivity extends Activity{
 									Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 									intent.putExtra("Uid", json_messages.optString("Uid"));
 									intent.putExtra("index", 0);
+									if(Uno.equals("00000000")){
+										intent.putExtra("isManager", 1);
+									}else{
+										intent.putExtra("isManager", 0);
+									}
 									startActivity(intent);
 									finish();
 								}else{

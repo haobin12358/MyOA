@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 public class ApprovalsFragment extends Fragment{
 	
 	private String Uid;
+	private int isManager;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -21,7 +22,7 @@ public class ApprovalsFragment extends Fragment{
 	
 	private void getBd(){
 		Uid = ((MainActivity)getActivity()).getUid();
-		//Utype = ((MainActivity)getActivity()).getUtype();
+		isManager = ((MainActivity)getActivity()).getisManager();
 		//index = ((MainActivity)getActivity()).getIndex();
 	}
 }

@@ -21,7 +21,7 @@ public class MainActivity extends Activity {
 	//定义默认参数
 	public int index = 0;
 	public String Uid;
-	public int Utype;
+	public int isManager;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +32,8 @@ public class MainActivity extends Activity {
 	public String getUid(){
 		return Uid;
 	}
-	public int getUtype(){
-		return Utype;
+	public int getisManager(){
+		return isManager;
 	}
 	public int getIndex(){
 		return index;
@@ -65,7 +65,7 @@ public class MainActivity extends Activity {
 				index = n;
 			}
 			Uid = bd.getString("Uid");
-			Utype = bd.getInt("Utype");
+			isManager = bd.getInt("isManager");
 		}catch (Exception e) {
 			e.printStackTrace();
 			Log.e("changeError", "false");
