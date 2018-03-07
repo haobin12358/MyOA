@@ -1,5 +1,7 @@
 package com.etech.myoa.view;
 
+import com.etech.myoa.R;
+
 import android.app.DialogFragment;  
 import android.os.Bundle;  
 import android.view.LayoutInflater;  
