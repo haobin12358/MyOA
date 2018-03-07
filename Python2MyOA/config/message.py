@@ -13,4 +13,4 @@ LOGIN_OK = {
     "Uid":"",
     "message":"login is ok !"
 }
-# 405102  # 密码错误 api 文档中描述error，和405103类似故不重复
+DB_CONN_ERROR = "the database connnect error. "

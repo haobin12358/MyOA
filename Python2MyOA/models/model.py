@@ -35,6 +35,44 @@ class User(Base):
     UCid = Column(String(64), nullable=False)
 
 
+class Approvals(Base):
+    __tablename__ = "Approvals"
+    Aid = Column(String(64), primary_key=True)
+    Uid = Column(String(64), nullable=False)
+    Astatus = Column(Integer, nullable=False)
+    Aindex = Column(Integer, nullable=False)
+    Tid = Column(String(64), nullable=False)
+
+
+class Examiners(Base):
+    __tablename__ = "Examiners"
+    Eid = Column(String(64), primary_key=True)
+    Aindex = Column(Integer, nullable=False)
+    Enum = Column(Integer, nullable=False)
+    Uid = Column(String(64), nullable=False)
+
+
+class Opinions(Base):
+    __tablename__ = "Opininons"
+    Oid = Column(String(64), primary_key=True)
+    Aid = Column(String(64), nullable=False)
+    Uid = Column(String(64), nullable=False)
+    Oinfo = Column(Text, nullable=False)
+
+
+class Template(Base):
+    __tablename__ = "Template"
+    Tid = Column(String(64), primary_key=True)
+    Tinfo = Column(Text, nullable=False)
+    Tinfotype = Column(Integer, nullable=False)
+
+
+class salary(Base):
+    __tablename__ = "salary"
+    Sid = Column(String(64), primary_key=True)
+    Snum = Column(Integer, nullable=False)
+
+
 class databse_deal():
     def __init__(self):
         self.conn = pymysql.connect(host=cfg.host, user=cfg.username, passwd=cfg.password, charset=cfg.charset)
