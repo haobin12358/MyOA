@@ -2,4 +2,6 @@
 <resources>
     <!-- 颜色集，"场景_拼音全写名称,中间用下划线分隔" -->
     <color name="mainactivity_view_blue">#C8E8FF</color>
+    <color name="mainactivity_click_red">#B22222</color>
+    <color name="mainactivity_unclick_gray">#575757</color>
 </resources>

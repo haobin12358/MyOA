@@ -1,5 +1,7 @@
 package com.etech.myoa.fragment;
 
-public class MeFragment {
+import android.app.Fragment;
+
+public class MeFragment extends Fragment{
 
 }

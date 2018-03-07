@@ -54,36 +54,46 @@ public class LoginActivity extends Activity{
 		@Override
 		public void onClick(View arg0) {
 			if(!EditTextIsNull()){
-				new Thread(){
-					public void run(){
-						JSONObject login_body = new JSONObject();
-						try {
-							login_body.put("Uno", Uno);
-							login_body.put("Upwd", Upwd);
-							postEntity = new HttppostEntity();
-							String login_response = postEntity.doPost(login_body, login_url);
-							Log.e("login_response", login_response);
-							Thread.sleep(2000);
-							JSONObject json_login_response = StringToJSON.toJSONObject(login_response);
-							String messages = json_login_response.optString("messages");
-							JSONObject json_messages = StringToJSON.toJSONObject(messages);
-							if(json_login_response.optInt("status") == 200){
-								Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-								intent.putExtra("Uid", json_messages.optString("Uid"));
-								intent.putExtra("index", 0);
-								startActivity(intent);
-								finish();
-							}else{
-								showDialog(messages);
+				try{
+					new Thread(){
+						public void run(){
+							JSONObject login_body = new JSONObject();
+							try {
+								login_body.put("Uno", Uno);
+								login_body.put("Upwd", Upwd);
+								postEntity = new HttppostEntity();
+								String login_response = postEntity.doPost(login_body, login_url);
+								Log.e("login_response", login_response);
+								Thread.sleep(2000);
+								JSONObject json_login_response = StringToJSON.toJSONObject(login_response);
+								String messages = json_login_response.optString("messages");
+								JSONObject json_messages = StringToJSON.toJSONObject(messages);
+								if(json_login_response.optInt("status") == 200){
+									Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+									intent.putExtra("Uid", json_messages.optString("Uid"));
+									intent.putExtra("index", 0);
+									startActivity(intent);
+									finish();
+								}else{
+									showDialog(messages);
+								}
+							} catch (JSONException e) {
+								e.printStackTrace();
+							} catch (Exception e) {
+								e.printStackTrace();
 							}
-						} catch (JSONException e) {
-							e.printStackTrace();
-						} catch (Exception e) {
-							e.printStackTrace();
+							
 						}
-						
-					}
-				}.start();
+					}.start();
+				}catch(Exception e){
+					Log.e("error","404");
+				}finally{
+					Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+					//intent.putExtra("Uid", json_messages.optString("Uid"));
+					intent.putExtra("index", 0);
+					startActivity(intent);
+					finish();
+				}
 			}
 		}
 	};

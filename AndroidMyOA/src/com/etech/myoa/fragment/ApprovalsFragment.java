@@ -1,5 +1,7 @@
 package com.etech.myoa.fragment;
 
-public class ApprovalsFragment {
+import android.app.Fragment;
+
+public class ApprovalsFragment extends Fragment{
 
 }
