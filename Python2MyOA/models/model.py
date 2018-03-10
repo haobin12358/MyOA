@@ -69,12 +69,14 @@ class Template(Base):
 
 
 class File(Base):
+    __tablename__ = "File"
     Fid = Column(String(64), primary_key=True)
     Fname = Column(String(255), nullable=False)
     Faddr = Column(Text)
     Frole = Column(Integer)
     Fsaw = Column(Text)
     Uid = Column(String(64))
+
 
 class databse_deal():
     def __init__(self):
