@@ -1,6 +1,9 @@
 # *- coding:utf8 *-
 from controller.CSubs import CSubs
-class ASubs():
+from flask_restful import Resource
+
+
+class ASubs(Resource):
     def __init__(self):
         self.csubs = CSubs()
 

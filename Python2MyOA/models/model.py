@@ -33,6 +33,7 @@ class User(Base):
     Udep = Column(String(128), nullable=False)
     Utel = Column(String(16), nullable=False)
     UCid = Column(String(64), nullable=False)
+    Usalary = Column(Integer)
 
 
 class Approvals(Base):
@@ -67,11 +68,13 @@ class Template(Base):
     Tinfotype = Column(Integer, nullable=False)
 
 
-class salary(Base):
-    __tablename__ = "salary"
-    Sid = Column(String(64), primary_key=True)
-    Snum = Column(Integer, nullable=False)
-
+class File(Base):
+    Fid = Column(String(64), primary_key=True)
+    Fname = Column(String(255), nullable=False)
+    Faddr = Column(Text)
+    Frole = Column(Integer)
+    Fsaw = Column(Text)
+    Uid = Column(String(64))
 
 class databse_deal():
     def __init__(self):

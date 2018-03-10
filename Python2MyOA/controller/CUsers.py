@@ -10,6 +10,7 @@ import json
 #引用项目类
 from service.SUsers import SUsers
 from common.get_str import get_str
+from common.import_status import import_status
 
 class CUser():
     def __init__(self):
@@ -37,9 +38,7 @@ class CUser():
         num_list =self.susers.get_all_unum() #获取数据库中存在的uname
         # 判断Unum是否存在
         if str(form["Unum"]) not in num_list:
-            from config.message import NO_USER as message
-            from config.status import INNER as status
-            from config.statuscode import NO_USER as statuscode
+            message, status, statuscode = import_status("NO_USER", "INNER", "NO_USER")
 
             return {
                 "message": message,
