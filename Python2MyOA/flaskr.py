@@ -3,6 +3,7 @@
 from flask import Flask
 import flask_restful
 from apis.AUsers import AUsers
+from apis.ASubs import ASubs
 
 # 实例化flask启动器
 app = Flask(__name__)
@@ -11,6 +12,7 @@ api = flask_restful.Api(app)
 
 # 定义实际接口
 api.add_resource(AUsers, "/users/<string:users>")
+api.add_resource(ASubs, "/sub/<string:sub>")
 
 
 # 启动方法
