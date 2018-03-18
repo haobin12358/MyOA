@@ -21,20 +21,26 @@ class CUser():
         该方法用来登录 需要判断密码是否正确
         :return:
         """
-        form = request.data #获取前端发送的body体
-        print str(form)
-        # 判断body体不为空
-        if str(form) == "" or str(form) == "[]":
-            from config.message import PARAM_MISS as message
-            from config.status import INNER as status
-            from config.statuscode import PARAM_MISS as statuscode
-
+        form = request.data  # 获取前端发送的body体
+        #  判断body参数是否缺失或者格式是否异常
+        try:
+            form = json.loads(form)  # 转换成json格式，如果转换错误，捕获异常
+            if len(form) != 2 or not ("Unum" in form.keys() and "Upwd" in form.keys()):
+                message, status, statuscode = import_status("BODY_PARAM_WRONG", "INNER", "BODY_PARAM_WRONG")
+                return {
+                    "message": message,
+                    "status": status,
+                    "statuscode": statuscode,
+                }
+        except Exception as e:
+            print(e.message)
+            message, status, statuscode = import_status("BODY_PARAM_WRONG", "INNER", "BODY_PARAM_WRONG")
             return {
                 "message": message,
                 "status": status,
                 "statuscode": statuscode,
             }
-        form = json.loads(form)
+
         print(type(form["Unum"]))
         num_list =self.susers.get_all_unum() # 获取数据库中存在的unum
         print(type(num_list))
@@ -42,7 +48,6 @@ class CUser():
         # 判断Unum是否存在
         if str(form["Unum"]) not in num_list:
             message, status, statuscode = import_status("NO_USER", "INNER", "NO_USER")
-
             return {
                 "message": message,
                 "status": status,
@@ -54,10 +59,7 @@ class CUser():
         print(form["Upwd"])
         # 判断session是否异常
         if Upwd == False:
-            from config.message import SYSTEM_ERROR as message
-            from config.status import OUT as status
-            from config.statuscode import SYSTEM_ERROR as statuscode
-
+            message, status, statuscode = import_status("SYSTEM_ERROR", "OUT", "SYSTEM_ERROR")
             return {
                 "message": message,
                 "status": status,
@@ -68,10 +70,7 @@ class CUser():
         print(type(form["Upwd"]))
         # 判断用户名与密码匹配
         if Upwd != str(form["Upwd"]):
-            from config.message import PWD_ERROR_LOGIN as message
-            from config.status import INNER as status
-            from config.statuscode import PWD_ERROR_LOGIN as statuscode
-
+            message, status, statuscode = import_status("PWD_ERROR_LOGIN", "INNER", "PWD_ERROR_LOGIN")
             return {
                 "message": message,
                 "status": status,
@@ -92,28 +91,41 @@ class CUser():
         该方法用于修改密码
         :return:
         """
-        form = request.data  # 获取前端发送的body体，以列表形式呈现
-        args = request.args.to_dict() # 获取前端的params参数，以字典形式呈现
-        print str(form)
-        print(args)
-        # 判断Uid参数不为空
-        if str(args) == "" or str(args) == "{}":
-            from config.message import UID_MISS as message
-            from config.status import INNER as status
-            from config.statuscode import UID_MISS as statuscode
 
+        # 判断url参数是否缺失或者格式是否异常
+        try:
+            args = request.args.to_dict()  # 获取前端的URL参数，以字典形式呈现，格式错误时，捕获异常
+            print(args)
+            if len(args) != 1 or "Uid" not in args.keys():
+                message, status, statuscode = import_status("URL_PARAM_WRONG", "INNER", "URL_PARAM_WRONG")
+                return {
+                    "message": message,
+                    "status": status,
+                    "statuscode": statuscode,
+                }
+        except Exception as e:
+            print(e.message)
+            message, status, statuscode = import_status("URL_PARAM_WRONG", "INNER", "URL_PARAM_WRONG")
             return {
                 "message": message,
                 "status": status,
                 "statuscode": statuscode,
             }
 
-        # 判断body体不为空
-        if str(form) == "" or str(form) == "[]":
-            from config.message import PARAM_MISS as message
-            from config.status import INNER as status
-            from config.statuscode import PARAM_MISS as statuscode
-
+        # 判断body体参数是否缺失或者格式是否异常
+        try:
+            form = request.data
+            form = json.loads(form)  # 获取前端发送的body体，以字典形式呈现
+            if len(form) != 2 or not ("oldpwd" in form.keys() and "newpwd" in form.keys()):
+                message, status, statuscode = import_status("BODY_PARAM_WRONG", "INNER", "BODY_PARAM_WRONG")
+                return {
+                    "message": message,
+                    "status": status,
+                    "statuscode": statuscode,
+                }
+        except Exception as e:
+            print(e.message)
+            message, status, statuscode = import_status("BODY_PARAM_WRONG", "INNER", "BODY_PARAM_WRONG")
             return {
                 "message": message,
                 "status": status,
@@ -124,10 +136,7 @@ class CUser():
         print(uid_list)
         # 判断session是否异常
         if uid_list == False:
-            from config.message import SYSTEM_ERROR as message
-            from config.status import OUT as status
-            from config.statuscode import SYSTEM_ERROR as statuscode
-
+            message, status, statuscode = import_status("SYSTEM_ERROR", "OUT", "SYSTEM_ERROR")
             return {
                 "message": message,
                 "status": status,
@@ -138,10 +147,7 @@ class CUser():
         # 判断uid存在
 
         if uid_to_str not in uid_list:
-            from config.message import NO_UID as message
-            from config.status import INNER as status
-            from config.statuscode import NO_UID as statuscode
-
+            message, status, statuscode = import_status("NO_UID", "INNER", "NO_UID")
             return {
                 "message": message,
                 "status": status,
@@ -153,10 +159,7 @@ class CUser():
         print(upwd)
         # 判断session是否异常
         if upwd == False:
-            from config.message import SYSTEM_ERROR as message
-            from config.status import OUT as status
-            from config.statuscode import SYSTEM_ERROR as statuscode
-
+            message, status, statuscode = import_status("SYSTEM_ERROR", "OUT", "SYSTEM_ERROR")
             return {
                 "message": message,
                 "status": status,
@@ -168,22 +171,16 @@ class CUser():
         print(type(form["oldpwd"]))
         print(type(uid_to_str))
         if form["oldpwd"] != upwd:
-            from config.message import WD_ERROR_OLD as message
-            from config.status import INNER as status
-            from config.statuscode import PWD_ERROR_OLD as statuscode
-
+            message, status, statuscode = import_status("WD_ERROR", "INNER", "WD_ERROR")
             return {
                 "message": message,
                 "status": status,
                 "statuscode": statuscode,
             }
 
-        # 判断新输入密码与原密码不相同
+        # 判断新输入密码与原密码是否相同
         if form["oldpwd"] == form["newpwd"]:
-            from config.message import PWD_EQUAL_OLD as message
-            from config.status import INNER as status
-            from config.statuscode import PWD_EQUAL_OLD as statuscode
-
+            message, status, statuscode = import_status("PWD_EQUAL_OLD", "INNER", "PWD_EQUAL_OLD")
             return {
                 "message": message,
                 "status": status,
@@ -195,10 +192,7 @@ class CUser():
         isupdate = self.susers.update_upwd_by_uid(uid_to_str, {"Upwd": form["newpwd"]})
         # 判断session是否异常
         if isupdate == False:
-            from config.message import SYSTEM_ERROR as message
-            from config.status import OUT as status
-            from config.statuscode import SYSTEM_ERROR as statuscode
-
+            message, status, statuscode = import_status("SYSTEM_ERROR", "OUT", "SYSTEM_ERROR")
             return {
                 "message": message,
                 "status": status,
@@ -215,13 +209,27 @@ class CUser():
         该方法查看用户的所有信息
         :return:
         """
-        args = request.args.to_dict()  # 获取前端的params参数,以列表形式呈现
+        try:
+            args = request.args.to_dict()  # 获取前端的url参数,以字典形式呈现，若转换发生错误，则捕获异常
+            # 判断url参数是否格式良好
+            if len(args) != 1 or "Uid" not in args.keys():
+                message, status, statuscode = import_status("URL_PARAM_WRONG", "INNER", "URL_PARAM_WRONG")
+                return {
+                    "message": message,
+                    "status": status,
+                    "statuscode": statuscode,
+                }
+        except Exception as e:
+            print(e)
+            return {
+                "message": message,
+                "status": status,
+                "statuscode": statuscode,
+            }
+
         # 判断Uid参数不为空
         if str(args) == "" or str(args) == "{}":
-            from config.message import UID_MISS as message
-            from config.status import INNER as status
-            from config.statuscode import UID_MISS as statuscode
-
+            message, status, statuscode = import_status("UID_MISS", "INNER", "UID_MISS")
             return {
                 "message": message,
                 "status": status,
@@ -232,10 +240,7 @@ class CUser():
         print(uid_list)
         # 判断session是否异常
         if uid_list == False:
-            from config.message import SYSTEM_ERROR as message
-            from config.status import OUT as status
-            from config.statuscode import SYSTEM_ERROR as statuscode
-
+            message, status, statuscode = import_status("SYSTEM_ERROR", "OUT", "SYSTEM_ERROR")
             return {
                 "message": message,
                 "status": status,
@@ -247,10 +252,7 @@ class CUser():
         print(type(uid_to_str))
         print(type(uid_list[0]))
         if uid_to_str not in uid_list:
-            from config.message import NO_UID as message
-            from config.status import INNER as status
-            from config.statuscode import NO_UID as statuscode
-
+            message, status, statuscode = import_status("NO_UID", "INNER", "NO_UID")
             return {
                 "message": message,
                 "status": status,

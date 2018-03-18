@@ -1,7 +1,8 @@
 # *- coding:utf8 *-
 NO_APIS = "the apis is not found"
-PARAM_MISS = "missing some parameters !"  # 参数缺失
-UID_MISS = "missing uid !" # uid参数为空
+BODY_PARAM_WRONG = "the body parameters is missing or form is wrong !"  # body参数缺失或格式异常
+URL_PARAM_WRONG = "the url parameters form is wrong !"  # url参数缺失或者格式异常
+BODY_MISS = "missing uid !"  # uid参数为空
 NO_UID = "the uid is not found"  # 不存在此uid
 PWD_ERROR_LOGIN = "the user or password error. "  # 登录时用户或密码错误
 WD_ERROR_OLD = "the old password error. "  # 修改密码时原始密码错误
