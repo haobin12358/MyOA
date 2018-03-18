@@ -113,8 +113,8 @@ class CUser():
             }
 
         # 判断body体参数是否缺失或者格式是否异常
+        form = request.data
         try:
-            form = request.data
             form = json.loads(form)  # 获取前端发送的body体，以字典形式呈现
             if len(form) != 2 or not ("oldpwd" in form.keys() and "newpwd" in form.keys()):
                 message, status, statuscode = import_status("BODY_PARAM_WRONG", "INNER", "BODY_PARAM_WRONG")
@@ -154,7 +154,6 @@ class CUser():
                 "statuscode": statuscode,
             }
 
-        form = json.loads(form)
         upwd = self.susers.get_upwd_by_uid(uid_to_str) # 根据用户名获取数据库的id
         print(upwd)
         # 判断session是否异常
@@ -171,7 +170,7 @@ class CUser():
         print(type(form["oldpwd"]))
         print(type(uid_to_str))
         if form["oldpwd"] != upwd:
-            message, status, statuscode = import_status("WD_ERROR", "INNER", "WD_ERROR")
+            message, status, statuscode = import_status("PWD_ERROR_OLD", "INNER", "PWD_ERROR_OLD")
             return {
                 "message": message,
                 "status": status,
